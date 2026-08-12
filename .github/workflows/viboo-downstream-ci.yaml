@@ -1,0 +1,31 @@
+name: Viboo downstream CI
+
+on:
+  push:
+    branches:
+      - "release/**"
+
+permissions:
+  contents: read
+
+jobs:
+  lint-and-unit:
+    name: Lint and unit tests
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: pipx install tox
+      - run: tox -vve argo-controller-lint
+      - run: tox -vve argo-controller-unit
+
+  build:
+    name: Pack argo-controller
+    uses: canonical/data-platform-workflows/.github/workflows/build_charm.yaml@v49.0.1
+    with:
+      path-to-charm-directory: charms/argo-controller
+      cache: true
+    permissions:
+      actions: read
+      contents: read
