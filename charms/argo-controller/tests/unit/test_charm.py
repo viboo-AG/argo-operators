@@ -271,6 +271,8 @@ def test_s3_endpoint_scheme_is_stripped(
     Argo's S3 client requires a bare host[:port] endpoint and rejects full URLs
     such as 'http://10.0.0.1' with "Endpoint url cannot have fully qualified paths".
     """
+    archive_key_format = "artifacts/{{pod.name}}"
+    harness.update_config({"key-format": archive_key_format})
     harness.begin()
     harness.charm.leadership_gate.get_status = MagicMock(return_value=ActiveStatus())
 
@@ -295,3 +297,4 @@ def test_s3_endpoint_scheme_is_stripped(
 
     assert context["s3_minio_endpoint"] == expected_endpoint
     assert context["s3_region"] == MOCK_S3_DATA_BASE["region"]
+    assert context["key_format"] == archive_key_format

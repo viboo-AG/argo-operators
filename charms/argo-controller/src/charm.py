@@ -34,7 +34,6 @@ from ops.charm import CharmBase
 
 from components.pebble_component import (
     ARGO_CONTROLLER_CONFIGMAP,
-    ARGO_KEYFORMAT,
     METRICS_PORT,
     ArgoControllerPebbleService,
 )
@@ -225,7 +224,7 @@ class ArgoControllerOperator(CharmBase):
                 "s3_minio_endpoint": endpoint,
                 "s3_region": s3_region,
                 "kubelet_insecure": self.model.config["kubelet-insecure"],
-                "key_format": ARGO_KEYFORMAT,
+                "key_format": self.model.config["key-format"],
             }
 
         return context
