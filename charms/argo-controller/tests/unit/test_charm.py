@@ -29,6 +29,7 @@ MOCK_S3_DATA_BASE = {
 EXPECTED_ENVIRONMENT = {
     "ARGO_NAMESPACE": "namespace",
     "LEADER_ELECTION_IDENTITY": "argo-controller",
+    "ARGO_POD_STATUS_CAPTURE_FINALIZER": "true",
 }
 
 

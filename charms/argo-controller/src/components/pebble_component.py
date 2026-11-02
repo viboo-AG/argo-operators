@@ -36,6 +36,8 @@ class ArgoControllerPebbleService(PebbleServiceComponent):
         self.environment = {
             "ARGO_NAMESPACE": self.model.name,
             "LEADER_ELECTION_IDENTITY": self.model.app.name,
+            # Keep pods until Argo records their status, even if Kubernetes GC deletes them.
+            "ARGO_POD_STATUS_CAPTURE_FINALIZER": "true",
         }
 
     def get_layer(self) -> Layer:
